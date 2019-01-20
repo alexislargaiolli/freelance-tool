@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { Credential } from '@users/models/credential.entity';
+import { CredentialsService } from '../../../users/services/credentials/credentials.service';
 import { UsersService } from '../../../users/services/users/users.service';
 import { JwtPayload } from '../../interfaces/jwt-payload.interface';
-import { User } from '@users/models/user.entity';
-import { CredentialsService } from '../../../users/services/credentials/credentials.service';
-import { Credential } from '@users/models/credential.entity';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +15,7 @@ export class AuthService {
     ) { }
 
     async validateUser(payload: JwtPayload): Promise<any> {
-        return this.usersService.findOneByEmail(payload.email);
+        return this.usersService.repo.findOne({ email: payload.email });
     }
 
     async authenticate(username: string, password: string): Promise<any> {
@@ -30,8 +29,8 @@ export class AuthService {
         return { user, token };
     }
 
-    async register(firstname: string, lastname: string, email: string, username: string, password: string): Promise<User> {
-        const user = await this.usersService.create({ firstname, lastname, email });
+    async register(firstname: string, lastname: string, email: string, username: string, password: string) {
+        const user = await this.usersService.createOne({ firstname, lastname, email })
         await this.credentialsService.create(username, password, user);
         return user;
     }

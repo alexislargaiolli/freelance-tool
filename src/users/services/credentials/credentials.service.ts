@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Credential } from '../../models/credential.entity';
-import { Repository } from 'typeorm';
+import { Repository, DeepPartial } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { User } from '@users/models/user.entity';
@@ -27,7 +27,7 @@ export class CredentialsService {
         return [verified, credential];
     }
 
-    async create(username: string, password: string, user: User) {
+    async create(username: string, password: string, user: DeepPartial<User>) {
         const hashedPassword = await this.hashPassword(password);
         return this.credentialRepository.save({ username, password: hashedPassword, user });
     }

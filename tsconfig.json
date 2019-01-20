@@ -11,13 +11,16 @@
     "target": "es6",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
+    "baseUrl": "./src/",
     "paths": {
+      "@common/*": [
+        "common/*"
+      ],
       "@auth/*": [
-        "src/auth/*"
+        "auth/*"
       ],
       "@users/*": [
-        "src/users/*"
+        "users/*"
       ],
     }
   },
