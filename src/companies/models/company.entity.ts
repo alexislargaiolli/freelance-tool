@@ -1,8 +1,8 @@
-import { User } from '@users/models/user.entity';
-import { Column, Entity, ManyToOne, OneToOne, JoinColumn, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
 import { Address } from '@common/address.entity';
-import { CREATE, UPDATE, CREATE_UPDATE } from '@nestjsx/crud';
+import { CREATE, CREATE_UPDATE, UPDATE } from '@nestjsx/crud';
+import { User } from '@users/models/user.entity';
 import { IsNotEmpty, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Company extends BaseEntity {
