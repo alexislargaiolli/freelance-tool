@@ -23,6 +23,18 @@
       "@users/*": [
         "users/*"
       ],
+      "@companies/*": [
+        "companies/*"
+      ],
+      "@customers/*": [
+        "customers/*"
+      ],
+      "@invoice/*": [
+        "invoice/*"
+      ],
+      "@quotation/*": [
+        "quotation/*"
+      ]
     }
   },
   "exclude": [
