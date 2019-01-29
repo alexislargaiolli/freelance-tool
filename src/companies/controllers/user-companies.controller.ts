@@ -8,7 +8,12 @@ import { UserParameter } from '@auth/decorators/user-parameter.decorator';
 
 @Feature('UserCompany')
 @Crud(Company, {
-    params: ['bossId']
+    params: ['bossId'],
+    options: {
+        join: {
+            facturationAddress: {}
+        }
+    }
 })
 @Controller('/users/:bossId/companies')
 @UserParameter('bossId')

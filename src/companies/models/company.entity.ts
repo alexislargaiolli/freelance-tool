@@ -23,7 +23,7 @@ export class Company extends BaseEntity {
     @MinLength(14, { ...CREATE_UPDATE })
     @MaxLength(14, { ...CREATE_UPDATE })
     @Column()
-    siret: number;
+    siret: string;
 
     @IsOptional({ ...UPDATE })
     @IsNotEmpty({ ...CREATE })
