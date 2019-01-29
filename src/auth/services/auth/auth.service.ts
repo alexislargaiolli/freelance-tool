@@ -30,7 +30,7 @@ export class AuthService {
     }
 
     async register(firstname: string, lastname: string, email: string, username: string, password: string) {
-        const user = await this.usersService.createOne({ firstname, lastname, email })
+        const user = await this.usersService.createOne({ firstname, lastname, email, roles: [] })
         await this.credentialsService.create(username, password, user);
         return user;
     }
