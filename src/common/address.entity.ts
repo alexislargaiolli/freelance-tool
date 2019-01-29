@@ -14,27 +14,27 @@ export class Address extends BaseEntity {
     @Column({ length: 120 })
     address1: string;
 
-    @IsOptional({ ...CREATE_UPDATE })
-    @IsString({ ...CREATE_UPDATE })
-    @MaxLength(200, { ...CREATE_UPDATE })
+    @IsOptional()
+    @IsString()
+    @MaxLength(200)
     @Column({ length: 120 })
     address2: string;
 
-    @IsOptional({ ...CREATE_UPDATE })
-    @IsString({ ...CREATE_UPDATE })
-    @MaxLength(200, { ...CREATE_UPDATE })
+    @IsOptional()
+    @IsString()
+    @MaxLength(200)
     @Column({ length: 120 })
     address3: string;
 
-    @IsNotEmpty({ ...CREATE_UPDATE })
-    @IsString({ ...CREATE_UPDATE })
-    @MaxLength(100, { ...CREATE_UPDATE })
+    @IsNotEmpty()
+    @IsString()
+    @MaxLength(100)
     @Column({ length: 100 })
     city: string;
 
-    @IsOptional({ ...CREATE_UPDATE })
-    @IsString({ ...CREATE_UPDATE })
-    @MaxLength(50, { ...CREATE_UPDATE })
+    @IsOptional()
+    @IsString()
+    @MaxLength(50)
     @Column({ length: 50 })
     state: string;
 
