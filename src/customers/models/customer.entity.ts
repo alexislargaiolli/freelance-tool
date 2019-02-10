@@ -1,8 +1,10 @@
 import { User } from '@users/models/user.entity';
 import { Column, Entity, ManyToOne, OneToOne, JoinColumn, PrimaryGeneratedColumn, BaseEntity, OneToMany } from 'typeorm';
 import { Address } from '@common/address.entity';
-import { IsOptional, IsNotEmpty, IsString, MaxLength, Length } from 'class-validator';
-import { UPDATE, CREATE, CREATE_UPDATE } from '@nestjsx/crud';
+import { IsOptional, IsNotEmpty, IsString, MaxLength, Length, ValidateNested } from 'class-validator';
+import { CrudValidate } from '@nestjsx/crud';
+import { Type } from 'class-transformer';
+const { CREATE, UPDATE } = CrudValidate;
 
 @Entity()
 export class Customer extends BaseEntity {
@@ -10,24 +12,26 @@ export class Customer extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @IsOptional({ ...UPDATE })
-    @IsNotEmpty({ ...CREATE })
-    @IsString({ ...CREATE_UPDATE })
-    @MaxLength(50, { ...CREATE_UPDATE })
+    @IsNotEmpty({ groups: [CREATE] })
+    @IsOptional({ groups: [UPDATE] })
+    @IsString({ always: true })
+    @MaxLength(50, { always: true })
     @Column()
     name: string;
 
-    @IsOptional({ ...CREATE_UPDATE })
-    @MaxLength(100, { ...CREATE_UPDATE })
+    @IsOptional({ groups: [CREATE, UPDATE] })
+    @MaxLength(100, { always: true })
     @Column()
     firstname: string;
 
-    @IsOptional({ ...CREATE_UPDATE })
-    @MaxLength(100, { ...CREATE_UPDATE })
+    @IsOptional({ groups: [CREATE, UPDATE] })
+    @MaxLength(100, { always: true })
     @Column()
     lastname: string;
 
-    @IsOptional({ ...CREATE_UPDATE })
+    @Type(t => Address)
+    @IsOptional({ groups: [CREATE, UPDATE] })
+    @ValidateNested({ always: true })
     @ManyToOne(type => Address, { cascade: true })
     @JoinColumn()
     facturationAddress: Address;
@@ -35,8 +39,8 @@ export class Customer extends BaseEntity {
     @Column({ nullable: false })
     userId: number;
 
-    @IsOptional({ ...UPDATE })
-    @IsNotEmpty({ ...CREATE })
+    @IsNotEmpty({ groups: [CREATE] })
+    @IsOptional({ groups: [UPDATE] })
     @ManyToOne(type => User, user => user.customers)
     user: User;
 }

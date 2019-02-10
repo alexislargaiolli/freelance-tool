@@ -1,10 +1,12 @@
 import { AbstractDocument } from '@common/abstract-document';
-import { CREATE, CREATE_UPDATE, UPDATE } from '@nestjsx/crud';
 import { User } from '@users/models/user.entity';
 import { IsDate, IsNotEmpty, IsOptional } from 'class-validator';
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { InvoiceState } from './invoice-state.enum';
 import { InvoiceItem } from './invoice-item.entity';
+import { Type } from 'class-transformer';
+import { CrudValidate } from '@nestjsx/crud';
+const { CREATE, UPDATE } = CrudValidate;
 
 @Entity()
 export class Invoice extends AbstractDocument {
@@ -12,31 +14,31 @@ export class Invoice extends AbstractDocument {
     /**
      * Date d'envoi
      */
-    @Column()
-    @IsOptional({ ...CREATE_UPDATE })
-    @IsDate({ ...UPDATE })
+    @Column({ nullable: true })
+    @IsOptional({ groups: [CREATE, UPDATE] })
+    @IsDate({ always: true })
     sendingDate: Date;
 
     /**
      * Date de paiement
      */
     @Column()
-    @IsOptional({ ...CREATE_UPDATE })
-    @IsDate({ ...UPDATE })
+    @IsOptional({ groups: [CREATE, UPDATE] })
+    @IsDate({ always: true })
     paymentDate: Date;
 
     /**
      * True si la facture est payée
      */
     @Column()
-    @IsOptional({ ...CREATE_UPDATE })
+    @IsOptional({ groups: [CREATE, UPDATE] })
     paid: boolean;
 
     /**
      * True si la facture a été déclarée
      */
     @Column()
-    @IsOptional({ ...CREATE_UPDATE })
+    @IsOptional({ groups: [CREATE, UPDATE] })
     declaredToTaxService: boolean;
 
     /**
@@ -47,16 +49,19 @@ export class Invoice extends AbstractDocument {
         enum: InvoiceState,
         default: InvoiceState.DRAFT
     })
+    @IsOptional({ groups: [CREATE, UPDATE] })
     state: string;
 
-    @OneToMany(type => InvoiceItem, invoiceItem => invoiceItem.invoice)
+    @IsOptional({ groups: [CREATE, UPDATE] })
+    @Type((t) => InvoiceItem)
+    @OneToMany(type => InvoiceItem, invoiceItem => invoiceItem.invoice, { cascade: true })
     invoiceItems: InvoiceItem[];
 
     @Column({ nullable: false })
     userId: number;
 
-    @IsOptional({ ...UPDATE })
-    @IsNotEmpty({ ...CREATE })
+    @IsOptional({ groups: [UPDATE] })
+    @IsNotEmpty({ groups: [CREATE] })
     @ManyToOne(type => User, user => user.quotations)
     user: User;
 }

@@ -11,7 +11,9 @@ import { InvoicesService } from 'invoice/services/quotations.service';
     params: ['userId'],
     options: {
         join: {
-            quotationItems: {}
+            quotationItems: {},
+            userFacturationAddress: {},
+            customerFacturationAddress: {}
         }
     }
 })

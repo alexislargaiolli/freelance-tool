@@ -1,8 +1,10 @@
 import { Address } from '@common/address.entity';
-import { CREATE, CREATE_UPDATE, UPDATE } from '@nestjsx/crud';
 import { User } from '@users/models/user.entity';
-import { IsNotEmpty, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, MaxLength, MinLength, ValidateNested } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
+import { Type } from 'class-transformer';
+import { CrudValidate } from '@nestjsx/crud';
+const { CREATE, UPDATE } = CrudValidate;
 
 @Entity()
 export class Company extends BaseEntity {
@@ -10,23 +12,24 @@ export class Company extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @IsOptional({ ...UPDATE })
-    @IsNotEmpty({ ...CREATE })
-    @IsString({ ...CREATE_UPDATE })
-    @MaxLength(100, { ...CREATE_UPDATE })
+    @IsOptional({ groups: [UPDATE] })
+    @IsNotEmpty({ groups: [CREATE] })
+    @IsString({ always: true })
+    @MaxLength(100, { always: true })
     @Column()
     name: string;
 
-    @IsOptional({ ...UPDATE })
-    @IsNotEmpty({ ...CREATE })
-    @IsString({ ...CREATE_UPDATE })
-    @MinLength(14, { ...CREATE_UPDATE })
-    @MaxLength(14, { ...CREATE_UPDATE })
+    @IsOptional({ groups: [UPDATE] })
+    @IsNotEmpty({ groups: [CREATE] })
+    @IsString({ always: true })
+    @MinLength(14, { always: true })
+    @MaxLength(14, { always: true })
     @Column()
     siret: string;
 
-    @IsOptional({ ...UPDATE })
-    @IsNotEmpty({ ...CREATE })
+    @IsOptional({ groups: [UPDATE, CREATE] })
+    @Type((t) => Address)
+    @ValidateNested({ always: true })
     @OneToOne(type => Address, { cascade: true })
     @JoinColumn()
     facturationAddress: Address;
@@ -34,8 +37,8 @@ export class Company extends BaseEntity {
     @Column({ nullable: false })
     bossId: number;
 
-    @IsOptional({ ...UPDATE })
-    @IsNotEmpty({ ...CREATE })
+    @IsOptional({ groups: [UPDATE] })
+    @IsNotEmpty({ groups: [CREATE] })
     @ManyToOne(type => User, user => user.companies)
     boss: User;
 

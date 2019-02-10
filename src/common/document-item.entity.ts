@@ -1,36 +1,44 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { MaxLength, IsInt, Min, Max } from 'class-validator';
+import { MaxLength, IsInt, Min, Max, IsNotEmpty, IsString } from 'class-validator';
+import { CrudValidate } from '@nestjsx/crud';
+const { CREATE, UPDATE } = CrudValidate;
 
 export abstract class DocumentItem extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number;
 
+    @IsNotEmpty({ groups: [CREATE, UPDATE] })
+    @IsInt({ always: true })
+    @Min(0, { always: true })
+    @Max(100, { always: true })
     @Column()
-    @IsInt()
-    @Min(0)
-    @Max(100)
     index: number;
 
+    @IsNotEmpty({ groups: [CREATE, UPDATE] })
+    @IsString({ always: true })
+    @MaxLength(100, { always: true })
     @Column()
-    @MaxLength(100)
     label: string;
 
-    @IsInt()
-    @Min(0)
-    @Max(10000)
+    @IsNotEmpty({ groups: [CREATE, UPDATE] })
+    @IsInt({ always: true })
+    @Min(0, { always: true })
+    @Max(10000, { always: true })
     @Column()
     quantity: number;
 
-    @IsInt()
-    @Min(0)
-    @Max(9999999)
+    @IsNotEmpty({ groups: [CREATE, UPDATE] })
+    @IsInt({ always: true })
+    @Min(0, { always: true })
+    @Max(9999999, { always: true })
     @Column()
     unitPrice: number;
 
-    @IsInt()
-    @Min(0)
-    @Max(9999999)
+    @IsNotEmpty({ groups: [CREATE, UPDATE] })
+    @IsInt({ always: true })
+    @Min(0, { always: true })
+    @Max(9999999, { always: true })
     @Column()
     totalPrice: number;
 

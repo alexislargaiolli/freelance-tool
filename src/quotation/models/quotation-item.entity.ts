@@ -1,52 +1,57 @@
-import { CREATE, UPDATE } from '@nestjsx/crud';
 import { IsInt, IsNotEmpty, IsOptional, Max, MaxLength, Min } from 'class-validator';
 import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Quotation } from './quotation.entity';
-
+import { CrudValidate } from '@nestjsx/crud';
+const { CREATE, UPDATE } = CrudValidate;
 @Entity()
 export class QuotationItem extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number;
 
-    @IsOptional({ ...UPDATE })
+    @IsNotEmpty({ groups: [CREATE] })
+    @IsOptional({ groups: [UPDATE] })
+    @IsInt({ always: true })
+    @Min(0, { always: true })
+    @Max(100, { always: true })
     @Column()
-    @IsInt()
-    @Min(0)
-    @Max(100)
     index: number;
 
-    @IsOptional({ ...UPDATE })
-    @MaxLength(100)
+    @IsNotEmpty({ groups: [CREATE] })
+    @IsOptional({ groups: [UPDATE] })
+    @MaxLength(100, { always: true })
     @Column()
     label: string;
 
-    @IsOptional({ ...UPDATE })
-    @IsInt()
-    @Min(0)
-    @Max(10000)
+    @IsNotEmpty({ groups: [CREATE] })
+    @IsOptional({ groups: [UPDATE] })
+    @IsInt({ always: true })
+    @Min(0, { always: true })
+    @Max(10000, { always: true })
     @Column()
     quantity: number;
 
-    @IsOptional({ ...UPDATE })
-    @IsInt()
-    @Min(0)
-    @Max(9999999)
+    @IsNotEmpty({ groups: [CREATE] })
+    @IsOptional({ groups: [UPDATE] })
+    @IsInt({ always: true })
+    @Min(0, { always: true })
+    @Max(9999999, { always: true })
     @Column()
     unitPrice: number;
 
-    @IsOptional({ ...UPDATE })
-    @IsInt()
-    @Min(0)
-    @Max(9999999)
+    @IsNotEmpty({ groups: [CREATE] })
+    @IsOptional({ groups: [UPDATE] })
+    @IsInt({ always: true })
+    @Min(0, { always: true })
+    @Max(9999999, { always: true })
     @Column()
     totalPrice: number;
 
     @Column({ nullable: false })
     quotationId: number;
 
-    @IsOptional({ ...UPDATE })
-    @IsNotEmpty({ ...CREATE })
+    @IsNotEmpty({ groups: [CREATE] })
+    @IsOptional({ groups: [UPDATE] })
     @ManyToOne(type => Quotation, quotation => quotation.quotationItems)
     quotation: Quotation;
 

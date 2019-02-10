@@ -1,6 +1,6 @@
 import { ForbiddenACL } from '@common/decorators/forbidden-acl.decorator';
 import { ForbiddenACLGuard } from '@common/guards/forbidden-acl.guard';
-import { Controller, UseGuards } from '@nestjs/common';
+import { Controller, UseGuards, Get, Req } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Crud, CrudActions, CrudController } from '@nestjsx/crud';
 import { User } from '../models/user.entity';
