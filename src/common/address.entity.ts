@@ -19,13 +19,13 @@ export class Address extends BaseEntity {
     @IsOptional({ groups: [CREATE, UPDATE] })
     @IsString({ always: true })
     @MaxLength(200, { always: true })
-    @Column({ length: 120 })
+    @Column({ length: 120, nullable: true })
     address2: string;
 
     @IsOptional({ groups: [CREATE, UPDATE] })
     @IsString()
     @MaxLength(200)
-    @Column({ length: 120 })
+    @Column({ length: 120, nullable: true })
     address3: string;
 
     @IsOptional({ groups: [UPDATE] })
@@ -38,7 +38,7 @@ export class Address extends BaseEntity {
     @IsOptional({ groups: [CREATE, UPDATE] })
     @IsString({ always: true })
     @MaxLength(50, { always: true })
-    @Column({ length: 50 })
+    @Column({ length: 50, nullable: true })
     state: string;
 
     @IsOptional({ groups: [UPDATE] })

@@ -1,5 +1,5 @@
 import { IsDate, IsEmail, IsInt, IsNotEmpty, IsOptional, IsPhoneNumber, IsString, Length, Max, MaxLength, Min, ValidateNested } from 'class-validator';
-import { BaseEntity, Column, CreateDateColumn, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { BaseEntity, Column, CreateDateColumn, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn, OneToOne } from 'typeorm';
 import { Address } from './address.entity';
 import { CrudValidate } from '@nestjsx/crud';
 import { Type } from 'class-transformer';
@@ -114,7 +114,7 @@ export class AbstractDocument extends BaseEntity {
      */
     @Type(t => Address)
     @IsOptional({ groups: [CREATE, UPDATE] })
-    @ManyToOne(type => Address, { cascade: true })
+    @OneToOne(type => Address, { cascade: true, nullable: true })
     @JoinColumn()
     @ValidateNested()
     userFacturationAddress: Address;
@@ -174,7 +174,7 @@ export class AbstractDocument extends BaseEntity {
      */
     @Type(t => Address)
     @IsOptional({ groups: [CREATE, UPDATE] })
-    @ManyToOne(type => Address, { cascade: true })
+    @OneToOne(type => Address, { cascade: true, nullable: true })
     @JoinColumn()
     @ValidateNested()
     customerFacturationAddress: Address;

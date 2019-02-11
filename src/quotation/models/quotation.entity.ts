@@ -13,7 +13,7 @@ export class Quotation extends AbstractDocument {
     /**
      * Date de validation d'un devis
      */
-    @Column()
+    @Column({ nullable: true })
     @IsOptional({ groups: [CREATE, UPDATE] })
     @IsDate({ always: true })
     validationDate: Date;
