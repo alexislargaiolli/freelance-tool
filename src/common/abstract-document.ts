@@ -37,7 +37,7 @@ export class AbstractDocument extends BaseEntity {
     @IsInt({ always: true })
     @Min(0, { always: true })
     @Max(9999999999, { always: true })
-    @Column()
+    @Column({ default: 0 })
     amount: number;
 
     /**
@@ -47,23 +47,23 @@ export class AbstractDocument extends BaseEntity {
     @IsInt({ always: true })
     @Min(0, { always: true })
     @Max(9999999999, { always: true })
-    @Column()
+    @Column({ default: 0 })
     amountDutyFree: number;
 
     /**
      * Document avec ou sans TVA
      */
     @IsOptional({ groups: [CREATE, UPDATE] })
-    @Column()
+    @Column({ default: false })
     tvaActive: boolean;
 
     /**
      * Montant de la TVA
      */
     @IsOptional({ groups: [CREATE, UPDATE] })
-    @Column()
     @Min(0, { always: true })
     @Max(9999999999, { always: true })
+    @Column({ default: 0 })
     tvaAmount: number;
 
 
@@ -81,7 +81,7 @@ export class AbstractDocument extends BaseEntity {
      * Nom de l'utilisateur
      */
     @IsOptional({ groups: [CREATE, UPDATE] })
-    @Column()
+    @Column({ nullable: true })
     @MaxLength(100, { always: true })
     userName: string;
 
@@ -90,7 +90,7 @@ export class AbstractDocument extends BaseEntity {
      */
     @IsOptional({ groups: [CREATE, UPDATE] })
     @IsPhoneNumber('fr', { always: true })
-    @Column()
+    @Column({ nullable: true })
     userPhone: string;
 
     /**
@@ -98,7 +98,7 @@ export class AbstractDocument extends BaseEntity {
      */
     @IsOptional({ groups: [CREATE, UPDATE] })
     @IsEmail({}, { always: true })
-    @Column()
+    @Column({ nullable: true })
     userEmail: string;
 
     /**
@@ -106,7 +106,7 @@ export class AbstractDocument extends BaseEntity {
      */
     @IsOptional({ groups: [CREATE, UPDATE] })
     @Length(14, 14, { always: true })
-    @Column()
+    @Column({ nullable: true })
     userSiret: string;
 
     /**
@@ -124,7 +124,7 @@ export class AbstractDocument extends BaseEntity {
      */
     @IsOptional({ groups: [CREATE, UPDATE] })
     @Length(13, 13, { always: true })
-    @Column()
+    @Column({ nullable: true })
     tvaIdentifier: string;
 
 
@@ -141,7 +141,7 @@ export class AbstractDocument extends BaseEntity {
      */
     @IsOptional({ groups: [CREATE, UPDATE] })
     @MaxLength(100, { always: true })
-    @Column()
+    @Column({ nullable: true })
     customerName: string;
 
     /**
@@ -149,7 +149,7 @@ export class AbstractDocument extends BaseEntity {
      */
     @IsOptional({ groups: [CREATE, UPDATE] })
     @IsPhoneNumber('fr', { always: true })
-    @Column()
+    @Column({ nullable: true })
     customerPhone: string;
 
     /**
@@ -157,7 +157,7 @@ export class AbstractDocument extends BaseEntity {
      */
     @IsOptional({ groups: [CREATE, UPDATE] })
     @IsDate({ always: true })
-    @Column()
+    @Column({ nullable: true })
     customerEmail: string;
 
 
@@ -166,7 +166,7 @@ export class AbstractDocument extends BaseEntity {
      */
     @IsOptional({ groups: [CREATE, UPDATE] })
     @Length(14, 14, { always: true })
-    @Column()
+    @Column({ nullable: true })
     customerSiret: string;
 
     /**

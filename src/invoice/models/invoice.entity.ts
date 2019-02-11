@@ -22,7 +22,7 @@ export class Invoice extends AbstractDocument {
     /**
      * Date de paiement
      */
-    @Column()
+    @Column({ nullable: true })
     @IsOptional({ groups: [CREATE, UPDATE] })
     @IsDate({ always: true })
     paymentDate: Date;
@@ -30,14 +30,14 @@ export class Invoice extends AbstractDocument {
     /**
      * True si la facture est payée
      */
-    @Column()
+    @Column({ default: false })
     @IsOptional({ groups: [CREATE, UPDATE] })
     paid: boolean;
 
     /**
      * True si la facture a été déclarée
      */
-    @Column()
+    @Column({ default: false })
     @IsOptional({ groups: [CREATE, UPDATE] })
     declaredToTaxService: boolean;
 
