@@ -15,8 +15,8 @@ export class AbstractDocument extends BaseEntity {
     @UpdateDateColumn()
     updatedDate: Date;
 
-    @IsOptional()
-    @IsDate()
+    @IsOptional({ groups: [CREATE, UPDATE] })
+    @IsDate({ always: true })
     @Column()
     validityDate: Date;
 
