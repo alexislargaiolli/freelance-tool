@@ -109,14 +109,17 @@ export class AbstractDocument extends BaseEntity {
     @Column({ nullable: true })
     userSiret: string;
 
+    @Column({ nullable: true })
+    userFacturationAddressId: number;
+
     /**
      * Adresse de facturation de l'utilisateur
      */
     @Type(t => Address)
     @IsOptional({ groups: [CREATE, UPDATE] })
-    @OneToOne(type => Address, { cascade: true, nullable: true })
+    @OneToOne(type => Address, { cascade: true, nullable: true, eager: true })
     @JoinColumn()
-    @ValidateNested()
+    @ValidateNested({ always: true })
     userFacturationAddress: Address;
 
     /**
@@ -169,14 +172,17 @@ export class AbstractDocument extends BaseEntity {
     @Column({ nullable: true })
     customerSiret: string;
 
+    @Column({ nullable: true })
+    customerFacturationAddressId: number;
+
     /**
      * Adresse de facturation du client
      */
     @Type(t => Address)
     @IsOptional({ groups: [CREATE, UPDATE] })
-    @OneToOne(type => Address, { cascade: true, nullable: true })
+    @OneToOne(type => Address, { cascade: true, nullable: true, eager: true })
     @JoinColumn()
-    @ValidateNested()
+    @ValidateNested({ always: true })
     customerFacturationAddress: Address;
 
 }

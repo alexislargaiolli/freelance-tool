@@ -1,10 +1,11 @@
 import { UserParameter } from '@auth/decorators/user-parameter.decorator';
 import { CurrentUser } from '@auth/guards/current-user.guard';
-import { Controller, UseGuards } from '@nestjs/common';
+import { Controller, UseGuards, Param, Query } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { Crud, CrudController, Feature } from '@nestjsx/crud';
+import { Crud, CrudController, Feature, Override, RestfulParamsDto } from '@nestjsx/crud';
 import { Invoice } from 'invoice/models/invoice.entity';
 import { InvoicesService } from 'invoice/services/quotations.service';
+import { ObjectLiteral } from 'typeorm';
 
 @Feature('UserInvoice')
 @Crud(Invoice, {
@@ -28,6 +29,11 @@ export class UserInvoicesController implements CrudController<InvoicesService, I
 
     get base(): CrudController<InvoicesService, Invoice> {
         return this;
+    }
+
+    @Override()
+    getOne(@Param('id') id: number, @Param() params: ObjectLiteral, @Query() query: RestfulParamsDto) {
+        return this.service.repo.findOne(id);
     }
 
 }
