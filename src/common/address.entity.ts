@@ -41,11 +41,10 @@ export class Address extends BaseEntity {
     @Column({ length: 50, nullable: true })
     state: string;
 
-    @IsOptional({ groups: [UPDATE] })
-    @IsNotEmpty({ groups: [CREATE] })
+    @IsOptional({ groups: [CREATE, UPDATE] })
     @IsString({ always: true })
     @MaxLength(50, { always: true })
-    @Column({ length: 50 })
+    @Column({ length: 50, nullable: true })
     country: string;
 
     @IsOptional({ groups: [UPDATE] })
