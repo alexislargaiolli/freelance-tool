@@ -3,22 +3,18 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
 import { Quotation } from './models/quotation.entity';
 import { QuotationsService } from './services/quotations.service';
-import { QuotationItem } from './models/quotation-item.entity';
-import { UserQuotationsController } from './controllers/user-quotation.controller';
-import { QuotationItemsService } from './services/quotation-items.service';
-import { QuotationItemsController } from './controllers/quotation-items.controller';
-import { QuotationItemsGuard } from './guards/quotation-items.guard';
+import { CompanyQuotationsController } from './controllers/company-quotation.controller';
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([Quotation, QuotationItem]),
+        TypeOrmModule.forFeature([Quotation]),
         PassportModule.register({ defaultStrategy: 'jwt' }),
     ],
     controllers: [
-        UserQuotationsController, QuotationItemsController
+        CompanyQuotationsController
     ],
     providers: [
-        QuotationsService, QuotationItemsService, QuotationItemsGuard
+        QuotationsService
     ],
 })
 export class QuotationModule { }

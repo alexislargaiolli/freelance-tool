@@ -1,23 +1,13 @@
 import { AbstractDocument } from '@common/abstract-document';
-import { User } from '@users/models/user.entity';
-import { IsDate, IsNotEmpty, IsOptional } from 'class-validator';
-import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
-import { InvoiceState } from './invoice-state.enum';
-import { InvoiceItem } from './invoice-item.entity';
-import { Type } from 'class-transformer';
+import { Company } from '@companies/models/company.entity';
 import { CrudValidate } from '@nestjsx/crud';
+import { IsDate, IsNotEmpty, IsOptional } from 'class-validator';
+import { Column, Entity, ManyToOne } from 'typeorm';
+import { InvoiceState } from './invoice-state.enum';
 const { CREATE, UPDATE } = CrudValidate;
 
 @Entity()
 export class Invoice extends AbstractDocument {
-
-    /**
-     * Date d'envoi
-     */
-    @Column({ nullable: true })
-    @IsOptional({ groups: [CREATE, UPDATE] })
-    @IsDate({ always: true })
-    sendingDate: Date;
 
     /**
      * Date de paiement
@@ -52,16 +42,14 @@ export class Invoice extends AbstractDocument {
     @IsOptional({ groups: [CREATE, UPDATE] })
     state: string;
 
-    @IsOptional({ groups: [CREATE, UPDATE] })
-    @Type((t) => InvoiceItem)
-    @OneToMany(type => InvoiceItem, invoiceItem => invoiceItem.invoice, { cascade: true })
-    invoiceItems: InvoiceItem[];
-
-    @Column({ nullable: false })
-    userId: number;
-
+    @Column("simple-json")
     @IsOptional({ groups: [UPDATE] })
     @IsNotEmpty({ groups: [CREATE] })
-    @ManyToOne(type => User, user => user.quotations)
-    user: User;
+    invoiceItems: { label: string, quantity: number, unitPrice: number, totalPrice: number }[];
+
+    @Column({ nullable: false })
+    companyId: number;
+
+    @ManyToOne(type => Company, company => company.invoices)
+    company: Company;
 }

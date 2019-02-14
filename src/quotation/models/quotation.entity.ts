@@ -1,11 +1,9 @@
 import { AbstractDocument } from '@common/abstract-document';
-import { User } from '@users/models/user.entity';
-import { IsDate, IsNotEmpty, IsOptional, ValidateNested } from 'class-validator';
-import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
-import { QuotationItem } from './quotation-item.entity';
-import { QuotationState } from './quotation-state.enum';
-import { Type } from 'class-transformer';
+import { Company } from '@companies/models/company.entity';
 import { CrudValidate } from '@nestjsx/crud';
+import { IsDate, IsNotEmpty, IsOptional } from 'class-validator';
+import { Column, Entity, ManyToOne } from 'typeorm';
+import { QuotationState } from './quotation-state.enum';
 const { CREATE, UPDATE } = CrudValidate;
 @Entity()
 export class Quotation extends AbstractDocument {
@@ -29,17 +27,14 @@ export class Quotation extends AbstractDocument {
     })
     state: string;
 
-    @IsOptional({ groups: [CREATE, UPDATE] })
-    @Type((t) => QuotationItem)
-    @ValidateNested()
-    @OneToMany(type => QuotationItem, quotationItem => quotationItem.quotation, { cascade: true })
-    quotationItems: QuotationItem[];
-
-    @Column({ nullable: false })
-    userId: number;
-
+    @Column("simple-json")
     @IsOptional({ groups: [UPDATE] })
     @IsNotEmpty({ groups: [CREATE] })
-    @ManyToOne(type => User, user => user.quotations)
-    user: User;
+    quotationItems: { label: string, quantity: number, unitPrice: number, totalPrice: number }[];
+
+    @Column({ nullable: false })
+    companyId: number;
+
+    @ManyToOne(type => Company, company => company.quotations)
+    company: Company;
 }

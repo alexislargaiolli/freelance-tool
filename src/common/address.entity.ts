@@ -9,11 +9,10 @@ export class Address extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @IsOptional({ groups: [UPDATE] })
-    @IsNotEmpty({ groups: [CREATE] })
+    @IsOptional({ groups: [CREATE, UPDATE] })
     @IsString({ always: true })
     @MaxLength(200, { always: true })
-    @Column({ length: 120 })
+    @Column({ length: 120, nullable: true })
     address1: string;
 
     @IsOptional({ groups: [CREATE, UPDATE] })
@@ -28,11 +27,10 @@ export class Address extends BaseEntity {
     @Column({ length: 120, nullable: true })
     address3: string;
 
-    @IsOptional({ groups: [UPDATE] })
-    @IsNotEmpty({ groups: [CREATE] })
+    @IsOptional({ groups: [CREATE, UPDATE] })
     @IsString({ always: true })
     @MaxLength(100, { always: true })
-    @Column({ length: 100 })
+    @Column({ length: 100, nullable: true })
     city: string;
 
     @IsOptional({ groups: [CREATE, UPDATE] })
@@ -47,11 +45,10 @@ export class Address extends BaseEntity {
     @Column({ length: 50, nullable: true })
     country: string;
 
-    @IsOptional({ groups: [UPDATE] })
-    @IsNotEmpty({ groups: [CREATE] })
+    @IsOptional({ groups: [CREATE, UPDATE] })
     @IsString({ always: true })
     @MaxLength(16, { always: true })
-    @Column({ length: 16 })
+    @Column({ length: 16, nullable: true })
     postalCode: string;
 
 }

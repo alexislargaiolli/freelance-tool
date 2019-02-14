@@ -1,24 +1,20 @@
 import { Module } from '@nestjs/common';
-import { InvoiceItem } from './models/invoice-item.entity';
 import { Invoice } from './models/invoice.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
-import { UserInvoicesController } from './controllers/user-invoice.controller';
-import { InvoiceItemsController } from './controllers/invoice-items.controller';
-import { InvoicesService } from './services/quotations.service';
-import { InvoiceItemsService } from './services/quotation-items.service';
-import { InvoiceItemsGuard } from './guards/quotation-items.guard';
+import { CompanyInvoicesController } from './controllers/company-invoice.controller';
+import { InvoicesService } from './services/invoices.service';
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([Invoice, InvoiceItem]),
+        TypeOrmModule.forFeature([Invoice]),
         PassportModule.register({ defaultStrategy: 'jwt' }),
     ],
     controllers: [
-        UserInvoicesController, InvoiceItemsController
+        CompanyInvoicesController
     ],
     providers: [
-        InvoicesService, InvoiceItemsService, InvoiceItemsGuard
+        InvoicesService
     ],
 })
 export class InvoiceModule {

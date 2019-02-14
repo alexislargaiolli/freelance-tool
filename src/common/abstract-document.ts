@@ -16,9 +16,16 @@ export class AbstractDocument extends BaseEntity {
     updatedDate: Date;
 
     @IsOptional({ groups: [CREATE, UPDATE] })
-    @IsDate({ always: true })
     @Column({ nullable: true })
     validityDate: Date;
+
+    /**
+     * Date d'envoi
+     */
+    @Column({ nullable: true })
+    @IsOptional({ groups: [CREATE, UPDATE] })
+    sendingDate: Date;
+
 
     /**
      * Libellé du document
@@ -31,10 +38,19 @@ export class AbstractDocument extends BaseEntity {
     title: string;
 
     /**
+    * Numéro du document
+    */
+    @IsOptional({ groups: [UPDATE] })
+    @IsNotEmpty({ groups: [CREATE] })
+    @IsString({ always: true })
+    @MaxLength(10, { always: true })
+    @Column({ length: 10 })
+    code: string;
+
+    /**
      * Montant totat à payer TTC
      */
     @IsOptional({ groups: [CREATE, UPDATE] })
-    @IsInt({ always: true })
     @Min(0, { always: true })
     @Max(9999999999, { always: true })
     @Column({ default: 0 })
@@ -44,7 +60,6 @@ export class AbstractDocument extends BaseEntity {
      * Montant totat à payer hors taxe
      */
     @IsOptional({ groups: [CREATE, UPDATE] })
-    @IsInt({ always: true })
     @Min(0, { always: true })
     @Max(9999999999, { always: true })
     @Column({ default: 0 })
