@@ -17,6 +17,10 @@ export class AbstractDocument extends BaseEntity {
 
     @IsOptional({ groups: [CREATE, UPDATE] })
     @Column({ nullable: true })
+    startDate: Date;
+
+    @IsOptional({ groups: [CREATE, UPDATE] })
+    @Column({ nullable: true })
     validityDate: Date;
 
     /**
