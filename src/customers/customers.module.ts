@@ -3,15 +3,16 @@ import { Customer } from './models/customer.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
 import { CustomersService } from './services/customers.service';
-import { UserCustomerController } from './controllers/user-customers.controller';
+import { CompanyCustomerController } from './controllers/company-customers.controller';
+import { Address } from '@common/address.entity';
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([Customer]),
+        TypeOrmModule.forFeature([Customer, Address]),
         PassportModule.register({ defaultStrategy: 'jwt' }),
     ],
     controllers: [
-        UserCustomerController
+        CompanyCustomerController
     ],
     providers: [
         CustomersService,

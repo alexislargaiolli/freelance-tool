@@ -6,6 +6,7 @@ import { Type } from 'class-transformer';
 import { CrudValidate } from '@nestjsx/crud';
 import { Invoice } from '@invoice/models/invoice.entity';
 import { Quotation } from '@quotation/models/quotation.entity';
+import { Customer } from '@customers/models/customer.entity';
 const { CREATE, UPDATE } = CrudValidate;
 
 @Entity()
@@ -29,7 +30,8 @@ export class Company extends BaseEntity {
     @Column()
     siret: string;
 
-    @IsOptional({ groups: [UPDATE, CREATE] })
+    @IsNotEmpty({ groups: [CREATE] })
+    @IsOptional({ groups: [UPDATE] })
     @Type((t) => Address)
     @ValidateNested({ always: true })
     @OneToOne(type => Address, { cascade: true, eager: true })
@@ -49,5 +51,8 @@ export class Company extends BaseEntity {
 
     @OneToMany(type => Quotation, quotation => quotation.company)
     quotations: Quotation[];
+
+    @OneToMany(type => Customer, customer => customer.company)
+    customers: Customer[];
 
 }

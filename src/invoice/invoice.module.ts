@@ -4,10 +4,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
 import { CompanyInvoicesController } from './controllers/company-invoice.controller';
 import { InvoicesService } from './services/invoices.service';
+import { Address } from '@common/address.entity';
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([Invoice]),
+        TypeOrmModule.forFeature([Invoice, Address]),
         PassportModule.register({ defaultStrategy: 'jwt' }),
     ],
     controllers: [

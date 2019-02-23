@@ -1,6 +1,8 @@
-import { PrimaryGeneratedColumn, Column, Entity, BaseEntity } from 'typeorm';
+import { PrimaryGeneratedColumn, Column, Entity, BaseEntity, OneToOne } from 'typeorm';
 import { IsString, MaxLength, IsNotEmpty, IsOptional } from 'class-validator';
 import { CrudValidate } from '@nestjsx/crud';
+import { Invoice } from '@invoice/models/invoice.entity';
+import { Type } from 'class-transformer';
 const { CREATE, UPDATE } = CrudValidate;
 
 @Entity()

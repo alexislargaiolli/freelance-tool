@@ -43,7 +43,4 @@ export class User extends BaseEntity {
     @OneToMany(type => Company, company => company.boss)
     companies: Company[];
 
-    @OneToMany(type => Customer, customer => customer.user)
-    customers: Customer[];
-
 }
