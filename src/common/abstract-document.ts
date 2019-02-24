@@ -179,7 +179,7 @@ export class AbstractDocument extends BaseEntity {
      * Email du client
      */
     @IsOptional({ groups: [CREATE, UPDATE] })
-    @IsDate({ always: true })
+    @IsEmail({}, { always: true })
     @Column({ nullable: true })
     customerEmail: string;
 

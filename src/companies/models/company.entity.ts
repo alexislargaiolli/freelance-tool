@@ -1,6 +1,6 @@
 import { Address } from '@common/address.entity';
 import { User } from '@users/models/user.entity';
-import { IsNotEmpty, IsOptional, IsString, MaxLength, MinLength, ValidateNested } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, MaxLength, MinLength, ValidateNested, IsEmail, IsPhoneNumber } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, OneToOne, OneToMany } from 'typeorm';
 import { Type } from 'class-transformer';
 import { CrudValidate } from '@nestjsx/crud';
@@ -22,12 +22,21 @@ export class Company extends BaseEntity {
     @Column()
     name: string;
 
-    @IsOptional({ groups: [UPDATE] })
-    @IsNotEmpty({ groups: [CREATE] })
+    @IsOptional({ groups: [CREATE, UPDATE] })
+    @IsEmail({}, { always: true })
+    @Column({ nullable: true })
+    email: string;
+
+    @IsOptional({ groups: [CREATE, UPDATE] })
+    @IsPhoneNumber('fr', { always: true })
+    @Column({ nullable: true })
+    phone: string;
+
+    @IsOptional({ groups: [CREATE, UPDATE] })
     @IsString({ always: true })
     @MinLength(14, { always: true })
     @MaxLength(14, { always: true })
-    @Column()
+    @Column({ nullable: true })
     siret: string;
 
     @IsNotEmpty({ groups: [CREATE] })
