@@ -7,6 +7,7 @@ import { CrudValidate } from '@nestjsx/crud';
 import { Invoice } from '@invoice/models/invoice.entity';
 import { Quotation } from '@quotation/models/quotation.entity';
 import { Customer } from '@customers/models/customer.entity';
+import { TaxReturn } from 'tax-return/models/tax-return.entity';
 const { CREATE, UPDATE } = CrudValidate;
 
 @Entity()
@@ -63,5 +64,8 @@ export class Company extends BaseEntity {
 
     @OneToMany(type => Customer, customer => customer.company)
     customers: Customer[];
+
+    @OneToMany(type => TaxReturn, taxReturn => taxReturn.company)
+    taxReturns: TaxReturn[];
 
 }

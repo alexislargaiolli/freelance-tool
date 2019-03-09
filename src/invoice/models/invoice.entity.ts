@@ -4,6 +4,7 @@ import { CrudValidate } from '@nestjsx/crud';
 import { IsDate, IsNotEmpty, IsOptional } from 'class-validator';
 import { Column, Entity, ManyToOne } from 'typeorm';
 import { InvoiceState } from './invoice-state.enum';
+import { TaxReturn } from 'tax-return/models/tax-return.entity';
 const { CREATE, UPDATE } = CrudValidate;
 
 @Entity()
@@ -52,4 +53,7 @@ export class Invoice extends AbstractDocument {
 
     @ManyToOne(type => Company, company => company.invoices)
     company: Company;
+
+    @ManyToOne(type => TaxReturn, taxReturn => taxReturn.invoices)
+    taxReturn: TaxReturn;
 }

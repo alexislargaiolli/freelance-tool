@@ -17,6 +17,8 @@ import { UsersModule } from '@users/users.module';
 import { Address } from '@common/address.entity';
 import { InvoiceModule } from '@invoice/invoice.module';
 import { Invoice } from '@invoice/models/invoice.entity';
+import { TaxReturnModule } from 'tax-return/tax-returns.module';
+import { TaxReturn } from 'tax-return/models/tax-return.entity';
 
 @Module({
   imports: [
@@ -29,13 +31,14 @@ import { Invoice } from '@invoice/models/invoice.entity';
       username: process.env.DB_USER || 'mysql',
       password: process.env.DB_PASSWORD || 'mysql',
       database: process.env.DB_NAME || 'test',
-      entities: [User, Credential, Address, Company, Customer, Quotation, Invoice],
+      entities: [User, Credential, Address, Company, Customer, Quotation, Invoice, TaxReturn],
       synchronize: true,
     }),
     CustomersModule,
     CompaniesModule,
     QuotationModule,
     InvoiceModule,
+    TaxReturnModule
   ],
   controllers: [AppController],
   providers: [
