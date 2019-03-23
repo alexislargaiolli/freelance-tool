@@ -38,6 +38,12 @@ export class TaxReturn extends BaseEntity {
     @Column({ nullable: false })
     amount: number;
 
+    @IsOptional({ groups: [CREATE, UPDATE] })
+    @Min(0, { always: true })
+    @Max(9999999999, { always: true })
+    @Column({ nullable: false })
+    taxAmount: number;
+
     @Column({ nullable: false })
     companyId: number;
 

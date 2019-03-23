@@ -57,7 +57,7 @@ export class AbstractDocument extends BaseEntity {
     @IsOptional({ groups: [CREATE, UPDATE] })
     @Min(0, { always: true })
     @Max(9999999999, { always: true })
-    @Column({ default: 0 })
+    @Column({ default: 0, type: 'double' })
     amount: number;
 
     /**
@@ -66,7 +66,7 @@ export class AbstractDocument extends BaseEntity {
     @IsOptional({ groups: [CREATE, UPDATE] })
     @Min(0, { always: true })
     @Max(9999999999, { always: true })
-    @Column({ default: 0 })
+    @Column({ default: 0, type: 'double' })
     amountDutyFree: number;
 
     /**
@@ -82,7 +82,7 @@ export class AbstractDocument extends BaseEntity {
     @IsOptional({ groups: [CREATE, UPDATE] })
     @Min(0, { always: true })
     @Max(9999999999, { always: true })
-    @Column({ default: 0 })
+    @Column({ default: 0, type: 'double' })
     tvaAmount: number;
 
 

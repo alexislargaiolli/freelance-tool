@@ -15,7 +15,6 @@ export class Invoice extends AbstractDocument {
      */
     @Column({ nullable: true })
     @IsOptional({ groups: [CREATE, UPDATE] })
-    @IsDate({ always: true })
     paymentDate: Date;
 
     /**
