@@ -1,7 +1,7 @@
 import { AbstractDocument } from '@common/abstract-document';
 import { Company } from '@companies/models/company.entity';
 import { CrudValidate } from '@nestjsx/crud';
-import { IsDate, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsNotEmpty, IsOptional, Min, Max } from 'class-validator';
 import { Column, Entity, ManyToOne } from 'typeorm';
 import { InvoiceState } from './invoice-state.enum';
 import { TaxReturn } from 'tax-return/models/tax-return.entity';
@@ -30,6 +30,22 @@ export class Invoice extends AbstractDocument {
     @Column({ default: false })
     @IsOptional({ groups: [CREATE, UPDATE] })
     declaredToTaxService: boolean;
+
+    /**
+     * True si la facture est gérée par du portage salarial
+     */
+    @Column({ default: false })
+    @IsOptional({ groups: [CREATE, UPDATE] })
+    portage: boolean;
+
+    /**
+     * Montant du salaire de portage salarial
+     */
+    @Column({ default: 0, type: 'double' })
+    @Min(0, { always: true })
+    @Max(9999999999, { always: true })
+    @IsOptional({ groups: [CREATE, UPDATE] })
+    portageSalary: number;
 
     /**
      * Etat courant de la facture
